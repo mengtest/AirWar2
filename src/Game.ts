@@ -149,11 +149,13 @@ class Game {
         }
         //如果主角死亡，则停止游戏循环
         if (this.hero.hp < 1) {
-            Laya.timer.clear(this, this.onLoop);
+            Laya.timer.once(500, this, ()=>{
+                Laya.timer.clear(this, this.onLoop);
             //显示提示信息
             this.gameInfo.infoLabel.text = "GameOver! \nScore：" + this.score + "\nClick to restart!";
             //注册舞台点击事件，点击重新开始游戏
             this.gameInfo.infoLabel.once("click", this, this.restart);
+            });
         }
 
         //关卡越高，创建敌机间隔越短

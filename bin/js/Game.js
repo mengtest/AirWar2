@@ -54,6 +54,7 @@ var Game = (function () {
         console.log(this.hero.shootType);
     };
     Game.prototype.onLoop = function () {
+        var _this = this;
         //遍历所有飞机，更改飞机状态
         for (var i = this.roleBox.numChildren - 1; i > -1; i--) {
             var role = this.roleBox.getChildAt(i);
@@ -138,11 +139,13 @@ var Game = (function () {
         }
         //如果主角死亡，则停止游戏循环
         if (this.hero.hp < 1) {
-            Laya.timer.clear(this, this.onLoop);
-            //显示提示信息
-            this.gameInfo.infoLabel.text = "GameOver! \nScore：" + this.score + "\nClick to restart!";
-            //注册舞台点击事件，点击重新开始游戏
-            this.gameInfo.infoLabel.once("click", this, this.restart);
+            Laya.timer.once(500, this, function () {
+                Laya.timer.clear(_this, _this.onLoop);
+                //显示提示信息
+                _this.gameInfo.infoLabel.text = "GameOver! \nScore：" + _this.score + "\nClick to restart!";
+                //注册舞台点击事件，点击重新开始游戏
+                _this.gameInfo.infoLabel.once("click", _this, _this.restart);
+            });
         }
         //关卡越高，创建敌机间隔越短
         var cutTime = this.level < 30 ? this.level * 2 : 60;
