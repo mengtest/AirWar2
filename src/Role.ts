@@ -19,25 +19,28 @@ class Role extends Laya.Sprite {
     //射击类型
     public shootType: number = 0;
     //射击间隔
-    public shootInterval: number = 200;
+    public shootInterval: number = 500;
     //下次射击时间
     public shootTime: number = Laya.Browser.now() + 2000;
     //当前动作
     public action: string;
     //是否是子弹
-    public isBullet: boolean = false;
+    // public isBullet: boolean = false;
+    /**0：普通，1：子弹，2：弹药，3：补给品 */
+    public heroType: number = 0;
 
     constructor() {
         super();
     }
      
-    public init(type: string, camp: number, hp: number, speed: number, hitRadius: number): void {
+    public init(type: string, camp: number, hp: number, speed: number, hitRadius: number, heroType: number = 0): void {
         //初始化角色属性
         this.type = type;
         this.camp = camp;
         this.hp = hp;
         this.speed = speed;
         this.hitRadius = hitRadius;
+        this.heroType = heroType;
 
 
         //显示碰撞区域
@@ -73,6 +76,10 @@ class Role extends Laya.Sprite {
 
             //缓存子弹动画
             Laya.Animation.createFrames(["war/bullet1.png"], "bullet1_fly");
+            //缓存UFO1
+            Laya.Animation.createFrames(["war/ufo1.png"], "ufo1_fly");
+            //缓存UFO2
+            Laya.Animation.createFrames(["war/ufo2.png"], "ufo2_fly");
         }
         if(!this.body){
             //创建一个动画作为飞机的身体
@@ -98,6 +105,7 @@ class Role extends Laya.Sprite {
             this.visible = false;
         } else if (this.action === "hit") {
             //如果是被击动画播放完毕，则接着播放飞行动画
+            // this.playAction("hit");
             this.playAction("fly");
         }
     }

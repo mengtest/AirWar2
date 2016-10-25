@@ -15,19 +15,23 @@ var Role = (function (_super) {
         //射击类型
         this.shootType = 0;
         //射击间隔
-        this.shootInterval = 200;
+        this.shootInterval = 500;
         //下次射击时间
         this.shootTime = Laya.Browser.now() + 2000;
         //是否是子弹
-        this.isBullet = false;
+        // public isBullet: boolean = false;
+        /**0：普通，1：子弹，2：弹药，3：补给品 */
+        this.heroType = 0;
     }
-    Role.prototype.init = function (type, camp, hp, speed, hitRadius) {
+    Role.prototype.init = function (type, camp, hp, speed, hitRadius, heroType) {
+        if (heroType === void 0) { heroType = 0; }
         //初始化角色属性
         this.type = type;
         this.camp = camp;
         this.hp = hp;
         this.speed = speed;
         this.hitRadius = hitRadius;
+        this.heroType = heroType;
         //显示碰撞区域
         // this.graphics.clear();
         // this.graphics.drawCircle(0, 0, hitRadius, null, "#ff0000")
@@ -56,6 +60,10 @@ var Role = (function (_super) {
             Laya.Animation.createFrames(["war/enemy3_hit.png"], "enemy3_hit");
             //缓存子弹动画
             Laya.Animation.createFrames(["war/bullet1.png"], "bullet1_fly");
+            //缓存UFO1
+            Laya.Animation.createFrames(["war/ufo1.png"], "ufo1_fly");
+            //缓存UFO2
+            Laya.Animation.createFrames(["war/ufo2.png"], "ufo2_fly");
         }
         if (!this.body) {
             //创建一个动画作为飞机的身体
@@ -80,6 +88,7 @@ var Role = (function (_super) {
         }
         else if (this.action === "hit") {
             //如果是被击动画播放完毕，则接着播放飞行动画
+            // this.playAction("hit");
             this.playAction("fly");
         }
     };
