@@ -13,7 +13,7 @@ class Game {
     //子弹级别
     private bulletLevel: number = 0;
     //子弹发射偏移位置表
-    private bulletPos: Array<any> = [[0], [-15, 15], [-30, 0, 30], [-45, -15, 15, 45], [-50,-25,0,25,50]];
+    private bulletPos: Array<any> = [[0], [-15, 15], [-30, 0, 30], [-45, -15, 15, 45], [-90,-45,0,45,90]];
     //游戏角色容器
     private roleBox: Laya.Sprite;
     //游戏信息UI
@@ -32,9 +32,27 @@ class Game {
   
         //加载图集资源
         Laya.loader.load("res/atlas/war.json", Laya.Handler.create(this, this.onLoaded), null, Laya.Loader.ATLAS);
+        // Laya.loader.load([
+        //     {url:"res/sound/achievement.mp3",type:"sound"},
+        //     {url:"res/sound/bullet.mp3",type:"sound"},
+        //     {url:"res/sound/enemy1_down.mp3",type:"sound"},
+        //     {url:"res/sound/enemy2_down.mp3",type:"sound"},
+        //     {url:"res/sound/enemy3_down.mp3",type:"sound"},
+        //     {url:"res/sound/enemy3_out.mp3",type:"sound"},
+        //     {url:"res/sound/game_over.mp3",type:"sound"},
+        //     ]);
+
+        //设置适配模式
+        Laya.stage.scaleMode = "showall";
+ 
+        //设置剧中对齐
+        Laya.stage.alignH = "center";
+ 
+        //设置横竖屏
+        Laya.stage.screenMode = "vertical";
   
         //显示FPS
-        Laya.Stat.show(200, 0);
+        // Laya.Stat.show(200, 0);
     }
   
     onLoaded() {
@@ -61,8 +79,17 @@ class Game {
         this.roleBox.addChild(this.hero);
 
         //开始
-        this.restart();
-        console.log(this.hero.shootType);
+        // this.restart();
+        var that = this;
+        this.gameInfo.startBtn.once("click", this, ()=>{
+            that.restart();
+            that.gameInfo.startBtn.visible = false;
+            that.gameInfo.title.visible = false;
+            that.gameInfo.hpLabel.visible = true;
+            that.gameInfo.levelLabel.visible = true;
+            that.gameInfo.scoreLabel.visible = true;
+            that.gameInfo.pauseBtn.visible = true;
+        });
     }
   
     onLoop(): void {
@@ -99,12 +126,24 @@ class Game {
                         var bullet: Role = Laya.Pool.getItemByClass("role", Role);
                         //初始化子弹信息，根据不同子弹类型，设置不同的飞行速度
                         // bullet.init("bullet1", role.camp, 1, -10, 1);
-                        bullet.init("bullet1", role.camp, 1, -5 - role.shootType - Math.floor(this.level / 15), 1, 1);
+                        // bullet.init("bullet1", role.camp, 1, -5 - role.shootType - Math.floor(this.level / 15), 1, 1);
+                        if(this.hero.shootType == 5){
+                            bullet.init("bullet5", role.camp, 5, -5 - role.shootType - Math.floor(this.level / 15), 10, 1);
+                        }else if(this.hero.shootType == 4){
+                            bullet.init("bullet4", role.camp, 4, -5 - role.shootType - Math.floor(this.level / 15), 5, 1);
+                        }else if(this.hero.shootType == 3){
+                            bullet.init("bullet3", role.camp, 3, -5 - role.shootType - Math.floor(this.level / 15), 3, 1);
+                        }else if(this.hero.shootType == 2){
+                            bullet.init("bullet2", role.camp, 2, -5 - role.shootType - Math.floor(this.level / 15), 2, 1);
+                        }else if(this.hero.shootType == 1){
+                            bullet.init("bullet1", role.camp, 2, -5 - role.shootType - Math.floor(this.level / 15), 1, 1);
+                        }
                         //设置子弹发射初始化位置
                         bullet.pos(role.x + pos[index], role.y - role.hitRadius - 10);
                         //添加到舞台上
                         this.roleBox.addChild(bullet);
                     }
+                    // Laya.SoundManager.playSound("res/sound/bullet.mp3");
                 }
             }else{
                 // console.log(role.shootType);
@@ -149,13 +188,25 @@ class Game {
         }
         //如果主角死亡，则停止游戏循环
         if (this.hero.hp < 1) {
+            // Laya.SoundManager.playSound("res/sound/game_over.mp3");
             Laya.timer.once(500, this, ()=>{
                 Laya.timer.clear(this, this.onLoop);
-            //显示提示信息
-            this.gameInfo.infoLabel.text = "GameOver! \nScore：" + this.score + "\nClick to restart!";
-            //注册舞台点击事件，点击重新开始游戏
-            this.gameInfo.infoLabel.once("click", this, this.restart);
+                //显示提示信息
+                this.gameInfo.restartBtn.label = "" + this.score;
+                this.gameInfo.restartBtn.visible = true;
+                //注册舞台点击事件，点击重新开始游戏
+                var that2 = this;
+                this.gameInfo.restartBtn.once("click", this, ()=>{
+                    that2.restart();
+                    that2.gameInfo.startBtn.visible = false;
+                    that2.gameInfo.title.visible = false;
+                    that2.gameInfo.hpLabel.visible = true;
+                    that2.gameInfo.levelLabel.visible = true;
+                    that2.gameInfo.scoreLabel.visible = true;
+                    that2.gameInfo.pauseBtn.visible = true;
+                });
             });
+
         }
 
         //关卡越高，创建敌机间隔越短
@@ -179,6 +230,7 @@ class Game {
             this.createEnemy(2, 1, 1 + speedUp, 10 + hpUp * 6);
         }        
     }
+
     lostHp(role: Role, lostHp: number): void {
         //减血
         role.hp -= lostHp;
@@ -203,6 +255,7 @@ class Game {
             }
             //隐藏道具
             role.visible = false;
+            // Laya.SoundManager.playSound("res/sound/achivement.mp3");
         } else if (role.heroType === 3) {
             //每吃一个血瓶，血量增加1
             this.hero.hp++;
@@ -212,6 +265,7 @@ class Game {
 			this.gameInfo.hp(this.hero.hp);
             //隐藏道具
             role.visible = false;
+            // Laya.SoundManager.playSound("res/sound/achivement.mp3");
         } else if (role.hp > 0) {
             //如果未死亡，则播放受击动画
             role.playAction("hit");

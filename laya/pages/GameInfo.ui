@@ -2,7 +2,7 @@
     "x":0,
     "type":"View",
     "selectedBox":1,
-    "selecteID":5,
+    "selecteID":15,
     "props":{"width":480,"sceneColor":"#000000","height":852},
     "nodeParent":-1,
     "label":"View",
@@ -22,7 +22,7 @@
         {
             "x":15,
             "type":"Button",
-            "props":{"y":13,"x":407,"var":"pauseBtn","stateNum":"1","skin":"war/btn_pause.png","label":"label"},
+            "props":{"y":13,"x":407,"var":"pauseBtn","stateNum":"1","skin":"war/btn_pause.png"},
             "nodeParent":1,
             "label":"Button(pauseBtn)",
             "isDirectory":false,
@@ -42,7 +42,7 @@
         {
             "x":15,
             "type":"Label",
-            "props":{"y":15,"x":20,"width":70,"var":"hpLabel","text":"HP: 10","styleSkin":"war/label.png","overflow":"visible","height":20,"fontSize":18,"color":"#2ea638","bold":true,"align":"left"},
+            "props":{"y":15,"x":20,"width":70,"var":"hpLabel","text":"HP: 10","styleSkin":"war/label.png","overflow":"visible","height":20,"fontSize":18,"font":"Apple Chancery","color":"#010101","bold":true,"align":"left"},
             "nodeParent":1,
             "label":"Label(hpLabel)",
             "isDirectory":false,
@@ -62,7 +62,7 @@
         {
             "x":15,
             "type":"Label",
-            "props":{"y":40,"x":20,"width":80,"var":"levelLabel","text":"Level: 50","styleSkin":"war/label.png","overflow":"visible","height":20,"fontSize":18,"color":"#ee1916","bold":true,"align":"left"},
+            "props":{"y":40,"x":20,"width":80,"var":"levelLabel","text":"Level: 50","styleSkin":"war/label.png","overflow":"visible","height":20,"fontSize":18,"font":"Apple Chancery","color":"#050000","bold":true,"align":"left"},
             "nodeParent":1,
             "label":"Label(levelLabel)",
             "isDirectory":false,
@@ -82,7 +82,7 @@
         {
             "x":15,
             "type":"Label",
-            "props":{"y":65,"x":20,"width":100,"var":"scoreLabel","text":"Score: 100","styleSkin":"war/label.png","overflow":"visible","height":20,"fontSize":18,"color":"#1840de","bold":true,"align":"left"},
+            "props":{"y":65,"x":20,"width":100,"var":"scoreLabel","text":"Score: 100","styleSkin":"war/label.png","overflow":"visible","height":20,"fontSize":18,"font":"Apple Chancery","color":"#040405","bold":true,"align":"left"},
             "nodeParent":1,
             "label":"Label(scoreLabel)",
             "isDirectory":false,
@@ -97,25 +97,88 @@
                 }],
             "compId":5,
             "child":[
-                ]
+                ],
+            "$HIDDEN":true
         },
         {
             "x":15,
-            "type":"Label",
-            "props":{"y":350,"x":85,"width":300,"var":"infoLabel","text":"GAME OVER !","styleSkin":"war/label.png","overflow":"visible","height":150,"fontSize":40,"color":"#f4081b","bold":true,"align":"center"},
+            "type":"Button",
+            "props":{"width":291,"var":"restartBtn","stateNum":"1","skin":"war/btn_restart.png","labelSize":30,"labelPadding":"-20","labelFont":"Apple Chancery","labelColors":"#000000","labelBold":true,"labelAlign":"center","label":"232","height":256,"centerY":0,"centerX":0},
             "nodeParent":1,
-            "label":"Label(infoLabel)",
+            "label":"Button(restartBtn)",
             "isDirectory":false,
             "isAniNode":true,
             "hasChild":false,
             "frames":[
                 {
                     "type":1,
-                    "props":{"y":266,"x":216,"text":"label","styleSkin":"war/label.png"},
+                    "props":{"y":399,"x":227,"skin":"war/btn_restart.png","label":"label"},
                     "frame":0,
                     "__InPool":false
                 }],
-            "compId":6,
+            "compId":10,
+            "child":[
+                ],
+            "$HIDDEN":true
+        },
+        {
+            "x":15,
+            "type":"Button",
+            "props":{"var":"continueBtn","stateNum":"1","skin":"war/btn_continue.png","centerY":0,"centerX":0},
+            "nodeParent":1,
+            "label":"Button(continueBtn)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "frames":[
+                {
+                    "type":1,
+                    "props":{"y":265,"x":233,"skin":"war/btn_continue.png","label":"label"},
+                    "frame":0,
+                    "__InPool":false
+                }],
+            "compId":12,
+            "child":[
+                ],
+            "$HIDDEN":true
+        },
+        {
+            "x":15,
+            "type":"Button",
+            "props":{"var":"startBtn","stateNum":"1","skin":"war/btn_start.png","centerY":0,"centerX":0},
+            "nodeParent":1,
+            "label":"Button(startBtn)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "frames":[
+                {
+                    "type":1,
+                    "props":{"y":400,"x":229,"skin":"war/btn_start.png","label":"label"},
+                    "frame":0,
+                    "__InPool":false
+                }],
+            "compId":14,
+            "child":[
+                ]
+        },
+        {
+            "x":15,
+            "type":"Image",
+            "props":{"var":"title","skin":"war/title.png","centerY":-80,"centerX":0},
+            "nodeParent":1,
+            "label":"Image(title)",
+            "isDirectory":false,
+            "isAniNode":true,
+            "hasChild":false,
+            "frames":[
+                {
+                    "type":1,
+                    "props":{"y":323,"x":233,"skin":"war/title.png"},
+                    "frame":0,
+                    "__InPool":false
+                }],
+            "compId":15,
             "child":[
                 ]
         }],

@@ -16,7 +16,15 @@ var GameInfo = (function (_super) {
         this.reset();
     }
     GameInfo.prototype.reset = function () {
-        this.infoLabel.text = "";
+        // this.infoLabel.text = "";
+        this.title.visible = true;
+        this.startBtn.visible = true;
+        this.restartBtn.visible = false;
+        this.continueBtn.visible = false;
+        this.hpLabel.visible = false;
+        this.levelLabel.visible = false;
+        this.scoreLabel.visible = false;
+        this.pauseBtn.visible = false;
         this.hp(5);
         this.level(0);
         this.score(0);
@@ -25,25 +33,28 @@ var GameInfo = (function (_super) {
         //阻止事件冒泡
         e.stopPropagation();
         //暂停游戏
-        this.infoLabel.text = "暂停";
+        // this.infoLabel.text = "暂停";
+        this.continueBtn.visible = true;
         gameInstance.pause();
-        Laya.stage.once("click", this, this.onStageClick);
+        // Laya.stage.once("click", this.continueBtn, this.onStageClick);
+        this.continueBtn.once("click", this, this.onStageClick);
     };
     GameInfo.prototype.onStageClick = function (e) {
-        this.infoLabel.text = "";
+        // this.restartBtn.label = "";
+        this.continueBtn.visible = false;
         gameInstance.resume();
     };
     //显示血量
     GameInfo.prototype.hp = function (value) {
-        this.hpLabel.text = "HP:" + value;
+        this.hpLabel.text = "HP:   " + value;
     };
     //显示关卡级别
     GameInfo.prototype.level = function (value) {
-        this.levelLabel.text = "Level:" + value;
+        this.levelLabel.text = "Level:   " + value;
     };
     //显示积分
     GameInfo.prototype.score = function (value) {
-        this.scoreLabel.text = "Score:" + value;
+        this.scoreLabel.text = "Score:   " + value;
     };
     return GameInfo;
 }(ui.GameInfoUI));

@@ -7,9 +7,12 @@ module ui {
 		public hpLabel:Laya.Label;
 		public levelLabel:Laya.Label;
 		public scoreLabel:Laya.Label;
-		public infoLabel:Laya.Label;
+		public restartBtn:Laya.Button;
+		public continueBtn:Laya.Button;
+		public startBtn:Laya.Button;
+		public title:Laya.Image;
 
-        public static  uiView:any ={"type":"View","props":{"width":480,"height":852},"child":[{"type":"Button","props":{"y":13,"x":407,"var":"pauseBtn","stateNum":"1","skin":"war/btn_pause.png","label":"label"}},{"type":"Label","props":{"y":15,"x":20,"width":70,"var":"hpLabel","text":"HP: 10","overflow":"visible","height":20,"fontSize":18,"color":"#2ea638","bold":true,"align":"left"}},{"type":"Label","props":{"y":40,"x":20,"width":80,"var":"levelLabel","text":"Level: 50","overflow":"visible","height":20,"fontSize":18,"color":"#ee1916","bold":true,"align":"left"}},{"type":"Label","props":{"y":65,"x":20,"width":100,"var":"scoreLabel","text":"Score: 100","overflow":"visible","height":20,"fontSize":18,"color":"#1840de","bold":true,"align":"left"}},{"type":"Label","props":{"y":350,"x":85,"width":300,"var":"infoLabel","text":"GAME OVER !","overflow":"visible","height":150,"fontSize":40,"color":"#f4081b","bold":true,"align":"center"}}]};
+        public static  uiView:any ={"type":"View","props":{"width":480,"height":852},"child":[{"type":"Button","props":{"y":13,"x":407,"var":"pauseBtn","stateNum":"1","skin":"war/btn_pause.png"}},{"type":"Label","props":{"y":15,"x":20,"width":70,"var":"hpLabel","text":"HP: 10","overflow":"visible","height":20,"fontSize":18,"font":"Apple Chancery","color":"#010101","bold":true,"align":"left"}},{"type":"Label","props":{"y":40,"x":20,"width":80,"var":"levelLabel","text":"Level: 50","overflow":"visible","height":20,"fontSize":18,"font":"Apple Chancery","color":"#050000","bold":true,"align":"left"}},{"type":"Label","props":{"y":65,"x":20,"width":100,"var":"scoreLabel","text":"Score: 100","overflow":"visible","height":20,"fontSize":18,"font":"Apple Chancery","color":"#040405","bold":true,"align":"left"}},{"type":"Button","props":{"width":291,"var":"restartBtn","stateNum":"1","skin":"war/btn_restart.png","labelSize":30,"labelPadding":"-20","labelFont":"Apple Chancery","labelColors":"#000000","labelBold":true,"labelAlign":"center","label":"232","height":256,"centerY":0,"centerX":0}},{"type":"Button","props":{"var":"continueBtn","stateNum":"1","skin":"war/btn_continue.png","centerY":0,"centerX":0}},{"type":"Button","props":{"var":"startBtn","stateNum":"1","skin":"war/btn_start.png","centerY":0,"centerX":0}},{"type":"Image","props":{"var":"title","skin":"war/title.png","centerY":-80,"centerX":0}}]};
         constructor(){ super()}
         createChildren():void {
         

@@ -11,7 +11,15 @@ class GameInfo extends ui.GameInfoUI {
     }
      
     public reset():void{
-        this.infoLabel.text = "";
+        // this.infoLabel.text = "";
+        this.title.visible = true;
+        this.startBtn.visible = true;
+        this.restartBtn.visible = false;
+        this.continueBtn.visible = false;
+        this.hpLabel.visible = false;
+        this.levelLabel.visible = false;
+        this.scoreLabel.visible = false;
+        this.pauseBtn.visible = false;
         this.hp(5);
         this.level(0);
         this.score(0);
@@ -21,28 +29,31 @@ class GameInfo extends ui.GameInfoUI {
         //阻止事件冒泡
         e.stopPropagation();
         //暂停游戏
-        this.infoLabel.text = "暂停";
+        // this.infoLabel.text = "暂停";
+        this.continueBtn.visible = true;
         gameInstance.pause();
-        Laya.stage.once("click", this, this.onStageClick)
+        // Laya.stage.once("click", this.continueBtn, this.onStageClick);
+        this.continueBtn.once("click", this, this.onStageClick);
     }
   
     onStageClick(e: Laya.Event): void {
-        this.infoLabel.text = "";
+        // this.restartBtn.label = "";
+        this.continueBtn.visible = false;
         gameInstance.resume();
     }
   
     //显示血量
     public hp(value: number): void {
-        this.hpLabel.text = "HP:" + value;
+        this.hpLabel.text = "HP:   " + value;
     }
   
     //显示关卡级别
     public level(value: number): void {
-        this.levelLabel.text = "Level:" + value;
+        this.levelLabel.text = "Level:   " + value;
     }
   
     //显示积分
     public score(value: number): void {
-        this.scoreLabel.text = "Score:" + value;
+        this.scoreLabel.text = "Score:   " + value;
     }
 }

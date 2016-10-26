@@ -44,8 +44,8 @@ class Role extends Laya.Sprite {
 
 
         //显示碰撞区域
-        // this.graphics.clear();
-        // this.graphics.drawCircle(0, 0, hitRadius, null, "#ff0000")
+        this.graphics.clear();
+        this.graphics.drawCircle(0, 0, hitRadius, null, "#ff0000")
 
         //缓存公用动画模板，减少对象创建开销
         if (!Role.cached) {
@@ -76,6 +76,10 @@ class Role extends Laya.Sprite {
 
             //缓存子弹动画
             Laya.Animation.createFrames(["war/bullet1.png"], "bullet1_fly");
+            Laya.Animation.createFrames(["war/bullet2.png"], "bullet2_fly");
+            Laya.Animation.createFrames(["war/bullet3.png"], "bullet3_fly");
+            Laya.Animation.createFrames(["war/bullet4.png"], "bullet4_fly");
+            Laya.Animation.createFrames(["war/bullet5.png"], "bullet5_fly");
             //缓存UFO1
             Laya.Animation.createFrames(["war/ufo1.png"], "ufo1_fly");
             //缓存UFO2
