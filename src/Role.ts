@@ -42,10 +42,9 @@ class Role extends Laya.Sprite {
         this.hitRadius = hitRadius;
         this.heroType = heroType;
 
-
         //显示碰撞区域
-        this.graphics.clear();
-        this.graphics.drawCircle(0, 0, hitRadius, null, "#ff0000")
+        // this.graphics.clear();
+        // this.graphics.drawCircle(0, 0, hitRadius, null, "#ff0000")
 
         //缓存公用动画模板，减少对象创建开销
         if (!Role.cached) {
@@ -102,6 +101,8 @@ class Role extends Laya.Sprite {
 
     onPlayComplete(): void {
         //如果是击毁动画，则隐藏对象
+        
+        
         if (this.action === "down") {
             //停止动画播放
             this.body.stop();
@@ -110,15 +111,16 @@ class Role extends Laya.Sprite {
         } else if (this.action === "hit") {
             //如果是被击动画播放完毕，则接着播放飞行动画
             // this.playAction("hit");
+            
             this.playAction("fly");
         }
     }
 
     playAction(action: string): void {
+        this.action = action;
         //根据类型播放动画
         this.body.play(0, true, this.type + "_" + action);
         //延时获取动画大小区域，要等动画加载完
-        
         if(this.type === "hero"){
             Laya.timer.once(100, this, this.setPos);
         } else {

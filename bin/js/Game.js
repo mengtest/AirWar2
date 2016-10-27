@@ -2,8 +2,6 @@
 * Game
 */
 var Game = (function () {
-    //敌机被击半径表
-    // private radius: Array<number> = [18, 33, 80];
     function Game() {
         //关卡等级
         this.level = 0;
@@ -15,10 +13,6 @@ var Game = (function () {
         this.bulletLevel = 0;
         //子弹发射偏移位置表
         this.bulletPos = [[0], [-15, 15], [-30, 0, 30], [-45, -15, 15, 45], [-90, -45, 0, 45, 90]];
-        //敌机血量表
-        this.hps = [1, 2, 10];
-        //敌机速度表
-        this.speeds = [3, 2, 1];
         //敌机被击半径表
         this.radius = [18, 33, 80];
         //初始化引擎，设置游戏设计宽高
@@ -45,7 +39,7 @@ var Game = (function () {
         //设置横竖屏
         Laya.stage.screenMode = "vertical";
         //显示FPS
-        // Laya.Stat.show(200, 0);
+        Laya.Stat.show(200, 0);
     }
     Game.prototype.onLoaded = function () {
         //创建循环滚动的背景
@@ -85,6 +79,10 @@ var Game = (function () {
             if (role && role.speed) {
                 //根据飞机速度更改位置
                 role.y += role.speed;
+                if (role.type === "bullet5") {
+                    var ram = Math.random() < 0.5 ? 1 : 0;
+                    ram == 1 ? role.x += role.speed / 2 : role.x -= role.speed / 2;
+                }
                 //如果敌人移动到显示区域以外，则移除
                 if (role.y > 1000 || !role.visible || (role.heroType === 1 && role.y < -20)) {
                     //从舞台移除
@@ -125,7 +123,7 @@ var Game = (function () {
                             bullet.init("bullet2", role.camp, 2, -5 - role.shootType - Math.floor(this.level / 15), 2, 1);
                         }
                         else if (this.hero.shootType == 1) {
-                            bullet.init("bullet1", role.camp, 2, -5 - role.shootType - Math.floor(this.level / 15), 1, 1);
+                            bullet.init("bullet1", role.camp, 1, -5 - role.shootType - Math.floor(this.level / 15), 1, 1);
                         }
                         //设置子弹发射初始化位置
                         bullet.pos(role.x + pos[index], role.y - role.hitRadius - 10);
@@ -133,8 +131,6 @@ var Game = (function () {
                         this.roleBox.addChild(bullet);
                     }
                 }
-            }
-            else {
             }
         }
         //检测碰撞，原理：获取角色对象，一一对比之间的位置，判断是否击中
@@ -259,9 +255,11 @@ var Game = (function () {
         else if (role.hp > 0) {
             //如果未死亡，则播放受击动画
             role.playAction("hit");
-            Laya.timer.once(50, this, function () {
-                role.playAction("fly");
-            });
+            if (role.type === "enemy2") {
+                Laya.timer.once(50, this, function () {
+                    role.playAction("fly");
+                });
+            }
         }
         else {
             role.playAction("down");
@@ -296,7 +294,7 @@ var Game = (function () {
             //创建敌人，从对象池创建
             var enemy = Laya.Pool.getItemByClass("role", Role);
             //初始化角色
-            enemy.init("enemy" + (type + 1), 1, hp, speed, this.radius[type]);
+            enemy.init("enemy" + (type + 1), 1, hp, speed, this.radius[type], (type + 4));
             //随机位置
             enemy.pos(Math.random() * 400 + 40, -Math.random() * 200 - 100);
             //添加到舞台上
@@ -311,7 +309,7 @@ var Game = (function () {
         this.bulletLevel = 0;
         this.gameInfo.reset();
         //初始化角色
-        this.hero.init("hero", 0, 5, 0, 30);
+        this.hero.init("hero", 0, 5, 0, 30, 0);
         //设置角色位置
         this.hero.pos(240, 700);
         //设置射击类型

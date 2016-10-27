@@ -33,8 +33,8 @@ var Role = (function (_super) {
         this.hitRadius = hitRadius;
         this.heroType = heroType;
         //显示碰撞区域
-        this.graphics.clear();
-        this.graphics.drawCircle(0, 0, hitRadius, null, "#ff0000");
+        // this.graphics.clear();
+        // this.graphics.drawCircle(0, 0, hitRadius, null, "#ff0000")
         //缓存公用动画模板，减少对象创建开销
         if (!Role.cached) {
             Role.cached = true;
@@ -97,6 +97,7 @@ var Role = (function (_super) {
         }
     };
     Role.prototype.playAction = function (action) {
+        this.action = action;
         //根据类型播放动画
         this.body.play(0, true, this.type + "_" + action);
         //延时获取动画大小区域，要等动画加载完
