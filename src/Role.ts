@@ -126,12 +126,12 @@ class Role extends Laya.Sprite {
         } else {
             this.setPos();
         }
-        
     }
     setPos(){
         // 获取动画大小区域
         var bound: Laya.Rectangle = this.body.getBounds();
         //设置机身居中
         this.body.pos(-bound.width / 2, -bound.height / 2);
+        // this.pivot(-bound.width / 2, -bound.height / 2);
     }
 }

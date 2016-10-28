@@ -113,6 +113,7 @@ var Role = (function (_super) {
         var bound = this.body.getBounds();
         //设置机身居中
         this.body.pos(-bound.width / 2, -bound.height / 2);
+        // this.pivot(-bound.width / 2, -bound.height / 2);
     };
     //是否缓存了动画
     Role.cached = false;

@@ -78,10 +78,13 @@ var Game = (function () {
             var role = this.roleBox.getChildAt(i);
             if (role && role.speed) {
                 //根据飞机速度更改位置
-                role.y += role.speed;
                 if (role.type === "bullet5") {
                     var ram = Math.random() < 0.5 ? 1 : 0;
                     ram == 1 ? role.x += role.speed / 2 : role.x -= role.speed / 2;
+                    role.y += role.speed;
+                }
+                else {
+                    role.y += role.speed;
                 }
                 //如果敌人移动到显示区域以外，则移除
                 if (role.y > 1000 || !role.visible || (role.heroType === 1 && role.y < -20)) {
